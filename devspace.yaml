@@ -18,5 +18,5 @@ dev:
 
 commands:
   - name: start-demo
-    # This single command chains the entire setup and launch process!
-    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"
+    # Bypasses venv entirely by installing dependencies into a simple 'packages' folder
+    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && pip install -r requirements.txt --target=/tmp/devspaces-demo/packages && export PYTHONPATH=/tmp/devspaces-demo/packages && python app.py"
