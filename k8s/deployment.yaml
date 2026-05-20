@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devspaces-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devspaces-demo
+  template:
+    metadata:
+      labels:
+        app: devspaces-demo
+    spec:
+      containers:
+        - name: app
+          image: image-registry.openshift-image-registry.svc:5000/y-hamouda-dev/devspaces-demo:latest
+          ports:
+            - containerPort: 8080
