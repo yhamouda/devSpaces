@@ -21,10 +21,7 @@ dev:
     imageSelector: python:3.9-slim
     # Force the terminal to start in our writable folder
     workDir: /tmp/devspaces-demo
-    command:
-      - bash
-      - "-c"
-      - "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"
+    command: ["/bin/bash", "-c", "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"]
 
 commands:
   - name: install-deps
