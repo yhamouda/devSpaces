@@ -19,10 +19,12 @@ dev:
       containerPath: /tmp/devspaces-demo
   terminal:
     imageSelector: python:3.9-slim
+    # Force the terminal to start in our writable folder
+    workDir: /tmp/devspaces-demo
     command:
       - bash
       - "-c"
-      - "cd /tmp/devspaces-demo && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"
+      - "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"
 
 commands:
   - name: install-deps
