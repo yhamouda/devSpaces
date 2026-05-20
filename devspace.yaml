@@ -23,4 +23,4 @@ dev:
       - name: install-deps
         command: ["bash", "-lc", "cd /projects/devspaces-demo && pip install -r requirements.txt"]
       - name: run-app
-        command: ["bash", "-lc", "cd /projects/devspaces-demo && python app.py"]de
+        command: ["bash", "-lc", "cd /projects/devspaces-demo && python app.py"]
