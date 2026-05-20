@@ -8,25 +8,15 @@ deployments:
 
 dev:
   ports:
-    # Changed to match the new image in deployment.yaml
     - imageSelector: python:3.9-slim
       forward:
         - port: 8080
   sync:
-    # Changed to match the new image in deployment.yaml
     - imageSelector: python:3.9-slim
       localSubPath: .
       containerPath: /tmp/devspaces-demo
-  terminal:
-    imageSelector: python:3.9-slim
-    # Force the terminal to start in our writable folder
-    workDir: /tmp/devspaces-demo
-    command: ["/bin/bash", "-c", "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"]
 
 commands:
-  - name: install-deps
-    # Updated the cd path to match
-    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && pip install -r requirements.txt"
-  - name: run-app
-    # Updated the cd path to match
-    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && python app.py"
+  - name: start-demo
+    # This single command chains the entire setup and launch process!
+    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python app.py"
