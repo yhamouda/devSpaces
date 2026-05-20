@@ -1,0 +1,26 @@
+version: v1beta11
+projects:
+  - name: devspaces-demo
+    source:
+      path: .  # current repo
+
+dev:
+  # Dev profile for local iteration inside Dev Spaces
+  - name: default
+    devContainer:
+      image: quay.io/devspaces/ubuntu:latest  # or a custom image
+      command:
+        - sleep
+        - "infinity"
+      env:
+        - name: PIP_CACHE_DIR
+          value: /tmp/pip-cache
+    ports:
+      - port: 8080
+    sync:
+      - path: .:/projects/devspaces-demo
+    commands:
+      - name: install-deps
+        command: ["bash", "-lc", "cd /projects/devspaces-demo && pip install -r requirements.txt"]
+      - name: run-app
+        command: ["bash", "-lc", "cd /projects/devspaces-demo && python app.py"]de
