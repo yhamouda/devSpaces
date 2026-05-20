@@ -1,26 +1,49 @@
 version: v1beta11
-projects:
-  - name: devspaces-demo
-    source:
-      path: .  # current repo
 
+# 1. YOUR LOGIC: Target the current directory (.)
+# CORRECTION: 'projects' is invalid. Replaced with 'deployments' to target your local YAMLs.
+deployments:
+  - name: devspaces-demo
+    kubectl:
+      manifests:
+        - .
+
+# 2. YOUR LOGIC: Dev profile settings
+# CORRECTION: 'dev' must be a dictionary. Removed the list dash (- name: default).
 dev:
-  # Dev profile for local iteration inside Dev Spaces
-  - name: default
-    devContainer:
-      image: quay.io/devspaces/ubuntu:latest  # or a custom image
-      command:
-        - sleep
-        - "infinity"
-      env:
-        - name: PIP_CACHE_DIR
-          value: /tmp/pip-cache
-    ports:
-      - port: 8080
-    sync:
-      - path: .:/projects/devspaces-demo
-    commands:
-      - name: install-deps
-        command: ["bash", "-lc", "cd /projects/devspaces-demo && pip install -r requirements.txt"]
-      - name: run-app
-        command: ["bash", "-lc", "cd /projects/devspaces-demo && python app.py"]
+  # 3. YOUR LOGIC: Override container with ubuntu, sleep infinity, and your PIP env var.
+  # CORRECTION: 'devContainer' is invalid. Translated to 'replacePods' to apply your overrides.
+  replacePods:
+    - imageSelector: quay.io/devspaces/ubuntu:latest
+      replaceImage: quay.io/devspaces/ubuntu:latest
+      patches:
+        - op: replace
+          path: /spec/containers/0/command
+          value: ["sleep"]
+        - op: replace
+          path: /spec/containers/0/args
+          value: ["infinity"]
+        - op: add
+          path: /spec/containers/0/env
+          value:
+            - name: PIP_CACHE_DIR
+              value: /tmp/pip-cache
+
+  # 4. YOUR LOGIC: Forward port 8080 and sync the current directory.
+  # CORRECTION: Separated the string ".:/projects..." into 'localSubPath' and 'containerPath'.
+  ports:
+    - imageSelector: quay.io/devspaces/ubuntu:latest
+      forward:
+        - port: 8080
+  sync:
+    - imageSelector: quay.io/devspaces/ubuntu:latest
+      localSubPath: .
+      containerPath: /projects/devspaces-demo
+
+# 5. YOUR LOGIC: Custom commands (install-deps, run-app)
+# CORRECTION: Moved to the root level, as they cannot be nested inside 'dev'.
+commands:
+  - name: install-deps
+    command: devspace enter -- bash -lc "cd /projects/devspaces-demo && pip install -r requirements.txt"
+  - name: run-app
+    command: devspace enter -- bash -lc "cd /projects/devspaces-demo && python app.py"
