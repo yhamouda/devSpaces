@@ -16,7 +16,7 @@ dev:
     # Changed to match the new image in deployment.yaml
     - imageSelector: python:3.9-slim
       localSubPath: .
-      containerPath: /projects/devspaces-demo
+      containerPath: /tmp/devspaces-demo
 
 commands:
   - name: install-deps
