@@ -20,6 +20,8 @@ dev:
 
 commands:
   - name: install-deps
-    command: devspace enter -- bash -lc "cd /projects/devspaces-demo && pip install -r requirements.txt"
+    # Updated the cd path to match
+    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && pip install -r requirements.txt"
   - name: run-app
-    command: devspace enter -- bash -lc "cd /projects/devspaces-demo && python app.py"
+    # Updated the cd path to match
+    command: devspace enter -- bash -lc "cd /tmp/devspaces-demo && python app.py"
