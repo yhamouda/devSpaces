@@ -3,8 +3,9 @@ kind: Service
 metadata:
   name: devspaces-demo
 spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
   selector:
     app: devspaces-demo
-  ports:
-    - port: 80
-      targetPort: 8080
