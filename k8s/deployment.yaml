@@ -13,7 +13,8 @@ spec:
         app: devspaces-demo
     spec:
       containers:
-        - name: app
-          image: image-registry.openshift-image-registry.svc:5000/y-hamouda-dev/devspaces-demo:latest
+        - name: flask-app
+          image: python:3.9-slim
+          command: ["sleep", "infinity"]
           ports:
             - containerPort: 8080
