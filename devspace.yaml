@@ -6,7 +6,7 @@ deployments:
   - name: devspaces-demo
     kubectl:
       manifests:
-        - .
+        - k8s/
 
 # 2. YOUR LOGIC: Dev profile settings
 # CORRECTION: 'dev' must be a dictionary. Removed the list dash (- name: default).
