@@ -1,1 +1,22 @@
-id: eclipse/che-theia/latest
+inline:
+  schemaVersion: 2.1.0
+  metadata:
+    name: Custom Eclipse IDE
+  components:
+    - name: eclipse-ide
+      container:
+        # Replace this with any valid Eclipse IDE container image
+        image: 'quay.io/eclipse/che-theia:latest'
+        memoryLimit: 2048M
+        memoryRequest: 256Mi
+        cpuLimit: 1500m
+        cpuRequest: 100m
+        endpoints:
+          - name: eclipse-web
+            attributes:
+              type: main
+              discoverable: false
+            targetPort: 3100
+            exposure: public
+            secure: false
+            protocol: https
